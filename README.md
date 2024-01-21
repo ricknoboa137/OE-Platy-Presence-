@@ -14,9 +14,10 @@ https://drive.google.com/file/d/1Yay8N6dB6167HbH-BpTKxqf23NE7s6MG/view?usp=shari
 6. Make sure to select the scene to be rendered
 7. run
 
-![image](https://github.com/ricknoboa137/OE-Platy-Presence-/assets/45580543/afc86af5-9d87-4ab5-8064-a9bdbd59c40b)
+![image](https://github.com/ricknoboa137/OE-Platy-Presence-/assets/45580543/ee550470-26d7-4c92-b97b-0c5f5d42abb8)
 
-The project contains, between other elements, 2 RawImage elements used to display the stereo-images transmited from the robot platform. ()
+
+The project contains, between other elements, 2 RawImage elements used to display the stereo-images transmited from the robot platform. (RawImageRight / RawImageLeft as can be noticed in the Project architecture in the above image)
 
 ``` www
 ```
