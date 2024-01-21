@@ -5,7 +5,7 @@ This repository contains the current development state of a Telepresence Toolkit
 
 Download the Unity Project fro mthe link: 
 
-``` url
+``` http
 https://drive.google.com/file/d/1Yay8N6dB6167HbH-BpTKxqf23NE7s6MG/view?usp=sharing
 
 ```
