@@ -22,7 +22,7 @@ https://drive.google.com/file/d/1Yay8N6dB6167HbH-BpTKxqf23NE7s6MG/view?usp=shari
 ![image](https://github.com/ricknoboa137/OE-Platy-Presence-/assets/45580543/d7d954e2-9bfe-4b45-bce5-5118b5cf7062)
 
 
-The project contains, between other elements, 2 RawImage elements used to display the stereo-images transmited from the robot platform. (RawImageRight / RawImageLeft as can be noticed in the Project architecture in the above image)
+The project contains, between other elements, 2 RawImage elements used to display the stereo-images transmited from the robot platform, in separated layers to display one camera image per eye.  (RawImageRight / RawImageLeft as can be noticed in the Project architecture in the above image to perceive the depness sensation)
 
 ## Transmite Stereo-video from a Mobile Robot Platform
 
