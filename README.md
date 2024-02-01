@@ -1,7 +1,9 @@
-# OE-Platy-Presence-
+# OE-Platy-Presence
+This repository contains the current development state of a Telepresence Toolkit for mobile robot platforms, developed by the Obuda University. 
+
 ## Receive stereo-video in MetaQuest_2 from a mobile robot platform.
 
-This repository contains the current development state of a Telepresence Toolkit for mobile robot platforms, developed by the Obuda University. 
+
 
 1. Download the Unity Project from the link: 
 
