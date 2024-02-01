@@ -39,6 +39,6 @@ The project contains, between other elements, 2 RawImage elements used to displa
 1. The gimbal design can be found in the following link:
 
 2. make sure the servomotors are connected to the digital pins 4 and 5 of the board Node MCU V3, equiped with a ESP12 wifi chip.
-3. Download the Arduino code from this repo in the folder ArduinoScripts
+3. Download the Arduino code from this repo in the folder ArduinoSketch/nodeMCU
 4. make sure to update the IP adress of the computer runing the MQTT Broker and subscribe to the Topic "test1" to receive information from the headset
 5. Load the script to the board   
