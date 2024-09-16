@@ -8,7 +8,7 @@ import random
 
 
 # Define the IP address and port for broadcasting
-broker = '10.8.8.70'#'192.168.0.108'  # Broadcast to all devices on the network
+broker = '192.168.0.108'#'' 10.8.8.70  # Broadcast to all devices on the network
 port = 1883
 topic = "test"
 
@@ -51,7 +51,7 @@ def publish(client, msg):
 client = connect_mqtt()
 client.loop_start()
 # Initialize the video capture object
-cap = cv2.VideoCapture(0)  # 0 for the first webcam
+cap = cv2.VideoCapture(1)  # 0 for the first webcam
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml') #Load face detection model
 # Set the frame rate to 30 frames per second
 cap.set(cv2.CAP_PROP_FPS, 30)
@@ -63,16 +63,16 @@ while cont == 1:
     # Read the current frame from the webcam
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(50, 50))
+    #faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(50, 50))
     
     # Draw rectangle around the faces
-    for i, (x, y, w, h) in enumerate(faces):
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        cv2.putText(frame, f"Face {i+1}", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,255,0), 2)
+    #for i, (x, y, w, h) in enumerate(faces):
+    #    cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    #    cv2.putText(frame, f"Face {i+1}", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,255,0), 2)
     
-    resize= cv2.resize(frame, (1280, 480))
-    frame = cv2.cvtColor(resize, cv2.COLOR_BGR2GRAY)
-    #print(frame.shape)
+    frame= cv2.resize(gray, (720, 480))
+    #frame = cv2.cvtColor(resize, cv2.COLOR_BGR2GRAY)
+    print(frame.shape)
     res, frame = cv2.imencode('.jpg', frame)    # from image to binary buffer
     
     #print(frame)
