@@ -6,18 +6,18 @@
 Servo servo1;
 Servo servo2;
 const unsigned int MAX_MESSAGE_LENGTH = 12;
-unsigned long startMillis;  //some global variables available anywhere in the program
+unsigned long startMillis, ledMillis;  //some global variables available anywhere in the program
 unsigned long currentMillis;
 
 
 /************************* WiFi Access Point *********************************/
 
-#define WLAN_SSID       "IROB"
-#define WLAN_PASS       "Ha62Me52"
+#define WLAN_SSID       "UPC4998A18" //IROB
+#define WLAN_PASS       "ap6Ech8bsrfa" //Ha62Me52
 
 /************************* Adafruit.io Setup *********************************/
 
-#define AIO_SERVER      "10.8.8.181"
+#define AIO_SERVER      "192.168.0.109" //10.8.8.181
 #define AIO_SERVERPORT  1883                   // use 8883 for SSL
 #define AIO_USERNAME    ""
 #define AIO_KEY         ""
@@ -35,10 +35,8 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 
 // Setup a feed called 'photocell' for publishing.
 // Notice MQTT paths for AIO follow the form: <username>/feeds/<feedname>
-Adafruit_MQTT_Publish photocell = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "photocell");
-
-// Setup a feed called 'onoff' for subscribing to changes.
-Adafruit_MQTT_Subscribe test1 = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "test1");
+Adafruit_MQTT_Publish photocell = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "StereoCamState");
+Adafruit_MQTT_Subscribe test1 = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "VR_Rot");
 
 /*************************** Sketch Code ************************************/
 
@@ -53,13 +51,10 @@ void setup() {
   servo2.attach(5); //D1 Vertical
   delay(10);
   Serial.println("Servos attached");
-  Serial.println(F("Adafruit MQTT demo"));
-
   // Connect to WiFi access point.
   Serial.println(); Serial.println();
   Serial.print("Connecting to ");
   Serial.println(WLAN_SSID);
-
   WiFi.begin(WLAN_SSID, WLAN_PASS);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -74,6 +69,7 @@ void setup() {
   mqtt.subscribe(&test1);
   delay(2000);
   startMillis = millis();  //initial start time
+  ledMillis = millis();
 }
 
 uint32_t x=0;
@@ -82,12 +78,10 @@ long rotHor, rotVer, joyHor,joyVer, buttonA;
 
 
 void loop() {
-  digitalWrite(LED_BUILTIN, LOW);  // Turn the LED on (Note that LOW is the voltage level
-  // but actually the LED is on; this is because
-  // it is active low on the ESP-01)
-  delay(100);                      // Wait for a second
-  digitalWrite(LED_BUILTIN, HIGH);  // Turn the LED off by making the voltage HIGH
-  delay(200);  
+
+  //digitalWrite(LED_BUILTIN, LOW);  // Turn the LED on (Note that LOW is the voltage level
+  digitalWrite(LED_BUILTIN, LOW);  // Turn the LED off by making the voltage HIGH
+  
   //Read numbers from console (Serial Monitor) and write it as servo angle
   while (Serial.available() > 0)
  {
@@ -120,10 +114,8 @@ void loop() {
   // connection and automatically reconnect when disconnected).  See the MQTT_connect
   // function definition further below.
   MQTT_connect();
-
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
-
   Adafruit_MQTT_Subscribe *subscription;
   while ((subscription = mqtt.readSubscription(5000))) {
     if (subscription == &test1) {
@@ -137,17 +129,13 @@ void loop() {
         oculusValues[x] = atof(token);
         //Serial.println(oculusValues[x]);
         x++;
-        token = strtok(NULL,",");
-        
+        token = strtok(NULL,",");        
       }
-      
-
       rotVer=oculusValues[0]*100;
       rotHor=oculusValues[1]*100;
       joyHor=oculusValues[2]*100;
       joyVer=oculusValues[3]*100;
       buttonA=oculusValues[4]*100;
-      //Serial.print(map(rotVer,-40,25,0,70));
       Serial.print(rotVer);
       Serial.print(",");
       Serial.print(rotHor);
@@ -159,15 +147,18 @@ void loop() {
       Serial.println(buttonA);
       x=0;
       currentMillis=millis();
-      if (currentMillis-startMillis >= 500)
-       {
+      if (currentMillis-startMillis >= 100)
+       {          
           UpdateServos();
           startMillis=millis();
        }
         
     }
   }
-
+  if (millis()-ledMillis >= 300)
+  {
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  }
   // Now we can publish stuff!
   Serial.print(F("\nSending photocell val "));
   Serial.print(x);
