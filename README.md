@@ -24,7 +24,7 @@ https://drive.google.com/file/d/1Yay8N6dB6167HbH-BpTKxqf23NE7s6MG/view?usp=shari
 
 The project contains, between other elements, 2 RawImage elements used to display the stereo-images transmited from the robot platform, in separated layers to display one camera image per eye.  (RawImageRight / RawImageLeft as can be noticed in the Project architecture in the above image to perceive the depness sensation)
 
-## Transmite Stereo-video from a Mobile Robot Platform
+## Transmit Stereo-video from a Mobile Robot Platform
 
 1. Mke sure the camera is connected to the platform
 2. Dowload the folder PythonScripts from this repo (Make sure to edit the IP adress of the computer runing an MQTT Broker, port 1883)
